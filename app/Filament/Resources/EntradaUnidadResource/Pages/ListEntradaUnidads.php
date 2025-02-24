@@ -10,10 +10,12 @@ class ListEntradaUnidads extends ListRecords
 {
     protected static string $resource = EntradaUnidadResource::class;
 
+  
+
     protected function getHeaderActions(): array
     {
         return [
-            
+
             Actions\CreateAction::make(),
         ];
     }
