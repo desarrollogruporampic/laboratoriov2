@@ -2,7 +2,7 @@
 
     <x-filament::section collapsible collapsed persist-collapsed>
         <x-slot name="heading">
-            Crear Unidad Transfusional
+            Salidad Unidad Transfusional
         </x-slot>
 
         <div class="mt-5 md:mt-0 md:col-span-2">
@@ -11,8 +11,10 @@
                 sm:rounded-tr-md' : 'sm:rounded-md' }}">
                     <div class="grid grid-cols-6 gap-6">
                         {{ $this->form }}
-                        <x-filament::button label="create" type="submit">
-                            Guardar
+
+                        <x-filament::button id="btnAgregar" label="create" type="submit" icon="heroicon-m-plus-circle"
+                            wire:loading.attr="disabled" wire:key="btnAgregar">
+                            Agregar
                         </x-filament::button>
                     </div>
                 </div>

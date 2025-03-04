@@ -17,7 +17,7 @@ class User extends Authenticatable
 
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory;
-    use HasProfilePhoto;
+    /*    use HasProfilePhoto; */
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
@@ -50,9 +50,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $appends = [
+    /*  protected $appends = [
         'profile_photo_url',
-    ];
+    ]; */
 
     /**
      * Get the attributes that should be cast.

@@ -3,60 +3,40 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UnidadTransfusionalResource\Pages;
-use App\Filament\Resources\UnidadTransfusionalResource\RelationManagers;
+use App\Models\Fenotipo;
+use App\Models\TipoRh;
 use App\Models\UnidadTransfusional;
-use Filament\Forms;
-use Filament\Forms\Form;
+use App\Models\UnidadTransfusionalFenotipo;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Resources\Resource;
-use Filament\Tables;
-use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+use Guava\FilamentDrafts\Admin\Resources\Concerns\Draftable;
 
 class UnidadTransfusionalResource extends Resource
 {
+    use Draftable;
+
     protected static ?string $model = UnidadTransfusional::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                //
-            ]);
-    }
 
-    public static function table(Table $table): Table
-    {
-        return $table
-            ->columns([
-                //
-            ])
-            ->filters([
-                //
-            ])
-            ->actions([
-                Tables\Actions\EditAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
+    protected static ?string $navigationLabel = 'Stock Unidad';
+
+
+    protected static ?string $pluralLabel = 'Stock Unidades';
+
+    protected static ?string $navigationGroup = 'Almacenamiento Unidades Transfusionales';
 
     public static function getRelations(): array
     {
-        return [
-            //
-        ];
+        return [];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\EntradaUnidadTransfusional::route('/'),
+            'index' => Pages\ListUnidadTransfusionals::route('/'),
             'create' => Pages\CreateUnidadTransfusional::route('/create'),
             'edit' => Pages\EditUnidadTransfusional::route('/{record}/edit'),
         ];

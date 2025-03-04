@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Fenotipo extends Model
 {
+
     public $table = "t_fenotipo";
     public $timestamps = true;
     protected $primaryKey = 'id_fenotipo';
@@ -16,6 +17,11 @@ class Fenotipo extends Model
         'created_at',
         'updated_at',
         'IS_DELETE',
-        'EMPRESA',
+        'EMPRESA'
     ];
+
+    public function unidadtransfusionalfenotipo()
+    {
+        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_fenotipo', 'id_fenotipo');
+    }
 }

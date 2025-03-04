@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class TipoRh extends Model
 {
+
     use HasFactory;
     public $table = "t_tipo_rh";
     public $timestamps = true;
@@ -20,4 +22,10 @@ class TipoRh extends Model
         'IS_DELETE',
         'EMPRESA',
     ];
+
+
+    public function unidadtransfusionalfenotipo()
+    {
+        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_tipo_rh', 'id_tipo_rh');
+    }
 }

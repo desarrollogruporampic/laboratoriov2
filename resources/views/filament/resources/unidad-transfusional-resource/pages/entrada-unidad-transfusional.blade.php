@@ -12,7 +12,7 @@
                     <div class="grid grid-cols-6 gap-6">
                         {{ $this->form }}
                         <x-filament::button label="create" type="submit">
-                            Guardar
+                            Agregar
                         </x-filament::button>
                     </div>
                 </div>

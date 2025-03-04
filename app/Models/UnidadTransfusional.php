@@ -5,11 +5,11 @@ namespace App\Models;
 use Guava\FilamentDrafts\Concerns\HasDrafts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UnidadTransfusional extends Model
 {
     use HasDrafts;
-
 
     public $table = "t_unidad_transfusional";
     public $timestamps = true;
@@ -23,6 +23,7 @@ class UnidadTransfusional extends Model
         'fecha_entrada',
         'grupo_sanguineo_fk',
         'tipo_rh_fk',
+        'bodega_fk',
         'is_fenotipo',
         'nombre_fenotipo',
         'user_registra',
@@ -41,8 +42,18 @@ class UnidadTransfusional extends Model
         'published_at',
         'uuid',
         'publisher_type',
-        'publisher_id'
+        'publisher_id',
+        /* ATRIBUTO TEMPORAL */
+        'list_fenotipo'
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'list_fenotipo' => 'array',
+            'uuid' => 'string',
+        ];
+    }
 
     protected array $draftableRelations = [
         'tipohemocomponente',
@@ -50,6 +61,7 @@ class UnidadTransfusional extends Model
         'tiporh',
         'userentrada',
         'usersalida',
+        /*  'unidadtransfusionalfenotipo', */
     ];
 
     public function tipohemocomponente()
@@ -78,5 +90,16 @@ class UnidadTransfusional extends Model
     public function usersalida()
     {
         return $this->belongsTo(User::class, 'user_salida', 'id');
+    }
+    /*
+    public function unidadtransfusionalfenotipo()
+    {
+        return $this->hasManyThrough(UnidadTransfusional::class, UnidadTransfusionalFenotipo::class, 'id_unidad_transfusional', 'id_unidad_transfusional');
+    }
+ */
+
+    public function unidadtransfusionalfenotipo(): HasMany
+    {
+        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_unidad_transfusional', 'id_unidad_transfusional')->with('fenotipo', 'tiporh');
     }
 }
