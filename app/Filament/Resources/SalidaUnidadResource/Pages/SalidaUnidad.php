@@ -18,8 +18,8 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Notifications\Notification;
 
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\Page;
 use Filament\Tables\Actions\Action as ActionButton;
 
@@ -168,10 +168,16 @@ class SalidaUnidad extends Page implements HasTable
                     ->action(function (Collection $selectedRecords) {
                         if (count($selectedRecords) > 0) {
                             $selectedRecords->each(
-                                fn(Model $selectedRecord) => $selectedRecord->withoutRevision()->update([
-                                    'is_published' => 1,
-                                    'published_at' => Carbon::now(),
-                                ]),
+                                function (Model $selectedRecord) {
+
+                                    $selectedRecord->withoutRevision()->update([
+                                        'is_published' => 1,
+                                        'published_at' => Carbon::now()
+                                    ]);
+                                    $selectedRecord->unidadtransfusional()->update([
+                                        'IS_DELETE' => 1,
+                                    ]);
+                                }
                             );
                             Notification::make()
                                 ->title('Cambios guardados')
@@ -307,14 +313,14 @@ class SalidaUnidad extends Page implements HasTable
             $this->form->fill();
 
             Notification::make()
-                ->title('Unidad transfusional agregada')
+                ->title('Salida de Unidad transfusional exitosa')
                 ->success()
                 ->send();
         } catch (\Throwable $th) {
             DB::rollback();
 
             Notification::make()
-                ->title('Error al intentar agregar la unidad transfusional')
+                ->title('Error al intentar la salida de la unidad transfusional')
                 ->warning()
                 ->persistent()
                 ->body($th->getMessage())
