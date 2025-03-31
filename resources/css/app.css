@@ -1,7 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind variants;
 
+
+@custom-variant dark (&:where(.dark, .dark *));
 [x-cloak] {
     display: none;
 }

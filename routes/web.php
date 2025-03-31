@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UnidadTransfusionalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -14,4 +15,11 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::prefix('entrada')->name('entrada.')
+        ->group(function () {
+            Route::controller(UnidadTransfusionalController::class)->group(function () {
+                Route::get('generar-bitacora-entrada-pdf/{record}', 'generarPDF')->name('bitacora.generar-pdf'); // Incident Reports
+            });
+        });
 });

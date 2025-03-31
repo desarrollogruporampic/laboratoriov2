@@ -1,5 +1,6 @@
-<x-filament-panels::page>
 
+<x-filament-panels::page>
+    
     <x-filament::section collapsible collapsed persist-collapsed>
         <x-slot name="heading">
             Crear Unidad Transfusional

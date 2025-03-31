@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Filament\Clusters\HistorialUnidad;
 use App\Filament\Resources\UnidadTransfusionalResource\Pages;
 use App\Models\Fenotipo;
 use App\Models\TipoRh;
@@ -26,7 +27,7 @@ class UnidadTransfusionalResource extends Resource
 
     protected static ?string $pluralLabel = 'Stock Unidades';
 
-    protected static ?string $navigationGroup = 'Almacenamiento Unidades Transfusionales';
+    /*  protected static ?string $navigationGroup = 'Almacenamiento Unidades Transfusionales'; */
 
     public static function getRelations(): array
     {

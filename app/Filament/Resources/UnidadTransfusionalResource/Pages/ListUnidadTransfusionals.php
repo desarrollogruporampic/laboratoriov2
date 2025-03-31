@@ -19,6 +19,8 @@ class ListUnidadTransfusionals extends ListRecords
     use Draftable;
     protected static string $resource = UnidadTransfusionalResource::class;
 
+
+    
     protected function getHeaderActions(): array
     {
         return [

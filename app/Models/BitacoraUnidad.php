@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\TipoBitacoraUnidad;
 use Guava\FilamentDrafts\Concerns\HasDrafts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,6 +19,7 @@ class BitacoraUnidad extends Model
     protected $fillable = [
         'id_bitacora_unidad',
         'unidad_transfusional_fk',
+        'tipo_unidad',
         'accion',
         'comentario',
         'user_genera',
@@ -33,14 +35,20 @@ class BitacoraUnidad extends Model
         'publisher_id',
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'tipo_unidad' => TipoBitacoraUnidad::class,
+        ];
+    }
+
     protected array $draftableRelations = [
         'unidadtransfusional',
 
     ];
 
-
     public function unidadtransfusional(): BelongsTo
     {
-        return $this->belongsTo(UnidadTransfusional::class, 'unidad_transfusional_fk', 'id_unidad_transfusional')->with('tipohemocomponente');
+        return $this->belongsTo(UnidadTransfusional::class, 'unidad_transfusional_fk', 'id_unidad_transfusional')->with('tipohemocomponente', 'tiporh');
     }
 }

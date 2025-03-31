@@ -6,6 +6,7 @@ use Guava\FilamentDrafts\Concerns\HasDrafts;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 
 class UnidadTransfusional extends Model
 {
@@ -31,7 +32,6 @@ class UnidadTransfusional extends Model
         'comentario_salida',
         'fecha_salida',
         'user_salida',
-        'comentario_salida',
         'fecha_salida',
         'created_at',
         'updated_at',
@@ -44,13 +44,13 @@ class UnidadTransfusional extends Model
         'publisher_type',
         'publisher_id',
         /* ATRIBUTO TEMPORAL */
-        'list_fenotipo'
+        /*    'list_fenotipo' */
     ];
 
     protected function casts(): array
     {
         return [
-            'list_fenotipo' => 'array',
+            /* 'list_fenotipo' => 'array', */
             'uuid' => 'string',
         ];
     }
@@ -61,7 +61,7 @@ class UnidadTransfusional extends Model
         'tiporh',
         'userentrada',
         'usersalida',
-        /*  'unidadtransfusionalfenotipo', */
+        'unidadtransfusionalfenotipo',
     ];
 
     public function tipohemocomponente()
@@ -101,5 +101,27 @@ class UnidadTransfusional extends Model
     public function unidadtransfusionalfenotipo(): HasMany
     {
         return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_unidad_transfusional', 'id_unidad_transfusional')->with('fenotipo', 'tiporh');
+    }
+
+
+
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function (UnidadTransfusional $unidad) {
+
+            Log::info('ENTRA A CREAR LA BITACORA');
+            Log::debug($unidad);
+
+            BitacoraUnidad::create([
+                'unidad_transfusional_fk' => $unidad['id_unidad_transfusional'],
+                'accion' => 25,
+                'comentario' => 'Entrada de la unidad ' . $unidad['numero_componente'],
+                'user_genera' =>  $unidad['user_registra'],
+                'EMPRESA' =>  $unidad['EMPRESA']
+            ]);
+
+            /*  return $unidad; */
+        });
     }
 }
