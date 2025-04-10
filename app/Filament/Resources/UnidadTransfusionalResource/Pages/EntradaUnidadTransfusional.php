@@ -75,7 +75,7 @@ class EntradaUnidadTransfusional extends Page implements HasTable
                     ->schema([
                         Select::make('tipo_hemocomponente_fk')
                             ->label('Tipo Hemocomponente')
-                            ->options(fn() => TipoHemocomponente::all()->pluck('nombre_tipo_hemocomponente', 'id_tipo_hemocomponente'))
+                            ->options(fn() => TipoHemocomponente::all()->pluck('nombre_tipo_hemocomponente', 'id'))
                             ->searchable(true)
                             ->searchDebounce(debounce: 200)
                             ->required()
@@ -98,13 +98,13 @@ class EntradaUnidadTransfusional extends Page implements HasTable
                             ->native(false),
                         Select::make('grupo_sanguineo_fk')
                             ->label('Grupo sanguineo')
-                            ->options(fn() => GrupoSanguineo::all()->pluck('nombre_grupo_sanguineo', 'id_grupo_sanguineo'))
+                            ->options(fn() => GrupoSanguineo::all()->pluck('nombre_grupo_sanguineo', 'id'))
                             ->searchable(true)
                             ->required()
                             ->native(false),
                         Select::make('tipo_rh_fk')
                             ->label('Tipo Rh')
-                            ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id_tipo_rh'))
+                            ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id'))
                             ->searchable(true)
                             ->searchDebounce(debounce: 200)
                             ->required()
@@ -131,7 +131,7 @@ class EntradaUnidadTransfusional extends Page implements HasTable
                                 foreach ($fenotipos as $fenotipo) {
 
                                     $element = [
-                                        'id_fenotipo' => $fenotipo->id_fenotipo,
+                                        'id_fenotipo' => $fenotipo->id,
                                         'nombre_fenotipo' => $fenotipo->nombre_fenotipo,
                                         'id_tipo_rh' => '',
                                         'sigla_tipo_rh' => ''
@@ -157,9 +157,9 @@ class EntradaUnidadTransfusional extends Page implements HasTable
                             ->addable(true)
                             ->reorderableWithDragAndDrop(false)
                             ->schema([
-                                Select::make('id_fenotipo')
+                                Select::make('id')
                                     ->label('Tipo de Fenotipo')
-                                    ->options(fn() => Fenotipo::all()->pluck('nombre_fenotipo', 'id_fenotipo'))
+                                    ->options(fn() => Fenotipo::all()->pluck('nombre_fenotipo', 'id'))
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->selectablePlaceholder(false)
                                     ->required()
@@ -170,7 +170,7 @@ class EntradaUnidadTransfusional extends Page implements HasTable
                                 Select::make('id_tipo_rh')
                                     ->label('Tipo de Rh')
                                     ->live()
-                                    ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id_tipo_rh'))
+                                    ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id'))
                                     ->afterStateUpdated(function (Get $get, Set $set) {
                                         if ($get('id_tipo_rh')) {
                                             $set('sigla_tipo_rh', TipoRh::find($get('id_tipo_rh'))->sigla_tipo_rh);
@@ -224,7 +224,7 @@ class EntradaUnidadTransfusional extends Page implements HasTable
                 foreach ($form['list_fenotipo'] as $key => $element) {
 
                     UnidadTransfusionalFenotipo::create([
-                        'id_unidad_transfusional' => $unidad->id_unidad_transfusional,
+                        'id_unidad_transfusional' => $unidad->id,
                         'id_fenotipo' => $element['id_fenotipo'],
                         'id_tipo_rh' => $element['id_tipo_rh'],
                         'descripcion' => $element['nombre_fenotipo'] . $element['sigla_tipo_rh'],
@@ -379,7 +379,7 @@ class EntradaUnidadTransfusional extends Page implements HasTable
             ->actions([
                 ActionButton::make('Editar')
                     ->url(
-                        fn(UnidadTransfusional $unidad) => "unidad-transfusionals/$unidad->id_unidad_transfusional/edit"
+                        fn(UnidadTransfusional $unidad) => "unidad-transfusionals/$unidad->id/edit"
                     )
                     ->openUrlInNewTab()
             ])->striped()

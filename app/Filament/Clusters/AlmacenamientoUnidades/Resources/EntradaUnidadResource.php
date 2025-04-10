@@ -80,7 +80,7 @@ class EntradaUnidadResource extends Resource
                     ->schema([
                         Select::make('tipo_hemocomponente_fk')
                             ->label('Tipo de Hemocomponente')
-                            ->options(fn() => TipoHemocomponente::all()->pluck('nombre_tipo_hemocomponente', 'id_tipo_hemocomponente'))
+                            ->options(fn() => TipoHemocomponente::all()->pluck('nombre_tipo_hemocomponente', 'id'))
                             ->searchable(true)
                             ->searchDebounce(debounce: 200)
                             ->required()
@@ -103,13 +103,13 @@ class EntradaUnidadResource extends Resource
                             ->native(false),
                         Select::make('grupo_sanguineo_fk')
                             ->label('Grupo sanguineo')
-                            ->options(fn() => GrupoSanguineo::all()->pluck('nombre_grupo_sanguineo', 'id_grupo_sanguineo'))
+                            ->options(fn() => GrupoSanguineo::all()->pluck('nombre_grupo_sanguineo', 'id'))
                             ->searchable(true)
                             ->required()
                             ->native(false),
                         Select::make('tipo_rh_fk')
                             ->label('Tipo Rh')
-                            ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id_tipo_rh'))
+                            ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id'))
                             ->searchable(true)
                             ->searchDebounce(debounce: 200)
                             ->required()
@@ -136,9 +136,9 @@ class EntradaUnidadResource extends Resource
                                 foreach ($fenotipos as $fenotipo) {
 
                                     $element = [
-                                        'id_fenotipo' => $fenotipo->id_fenotipo,
+                                        'id' => $fenotipo->id,
                                         'nombre_fenotipo' => $fenotipo->nombre_fenotipo,
-                                        'id_tipo_rh' => '',
+                                        'id' => '',
                                         'sigla_tipo_rh' => ''
                                     ];
 
@@ -164,7 +164,7 @@ class EntradaUnidadResource extends Resource
                             ->schema([
                                 Select::make('id_fenotipo')
                                     ->label('Tipo de Fenotipo')
-                                    ->options(fn() => Fenotipo::all()->pluck('nombre_fenotipo', 'id_fenotipo'))
+                                    ->options(fn() => Fenotipo::all()->pluck('nombre_fenotipo', 'id'))
                                     ->disableOptionsWhenSelectedInSiblingRepeaterItems()
                                     ->selectablePlaceholder(false)
                                     ->required()
@@ -175,10 +175,10 @@ class EntradaUnidadResource extends Resource
                                 Select::make('id_tipo_rh')
                                     ->label('Tipo de Rh')
                                     ->live()
-                                    ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id_tipo_rh'))
+                                    ->options(fn() => TipoRh::all()->pluck('nombre_tipo_rh', 'id'))
                                     ->afterStateUpdated(function (Get $get, Set $set) {
-                                        if ($get('id_tipo_rh')) {
-                                            $set('sigla_tipo_rh', TipoRh::find($get('id_tipo_rh'))->sigla_tipo_rh);
+                                        if ($get('id')) {
+                                            $set('sigla_tipo_rh', TipoRh::find($get('id'))->sigla_tipo_rh);
                                         } else {
                                             $set('sigla_tipo_rh', null);
                                         }
@@ -318,7 +318,7 @@ class EntradaUnidadResource extends Resource
                 EditAction::make()
                     ->mutateRecordDataUsing(function (array $data): array {
 
-                        $unidad = UnidadTransfusional::with('unidadtransfusionalfenotipo')->onlyDrafts()->find($data['id_unidad_transfusional']);
+                        $unidad = UnidadTransfusional::with('unidadtransfusionalfenotipo')->onlyDrafts()->find($data['id']);
                         Log::info($unidad);
                         $data['list_fenotipo'] = $unidad->unidadtransfusionalfenotipo;
                         return $data;
@@ -342,7 +342,7 @@ class EntradaUnidadResource extends Resource
 
 
         Log::info('Entra a borrar todo los fenotipo');
-        $unidades = UnidadTransfusionalFenotipo::where('id_unidad_transfusional', $record->id_unidad_transfusional)->get();
+        $unidades = UnidadTransfusionalFenotipo::where('id_unidad_transfusional', $record->id)->get();
         foreach ($unidades as $unidad) {
             if ($unidad) {
                 Log::info('Borra unidad');

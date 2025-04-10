@@ -188,7 +188,7 @@
                 @else
                 <td width="10%"><strong>Número salida</strong></td>
                 @endif
-                <td width="15%">{{ $unidad->id_entrada_unidad }}</td>
+                <td width="15%">{{ $unidad->id }}</td>
                 @if ($unidad->tipo_unidad=='entrada')
                 <td width="10%"><strong>Fecha entrada</strong></td>
                 @else

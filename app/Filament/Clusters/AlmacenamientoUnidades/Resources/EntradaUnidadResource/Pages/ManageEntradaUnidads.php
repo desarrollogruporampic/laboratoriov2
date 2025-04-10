@@ -75,7 +75,7 @@ class ManageEntradaUnidads extends ManageRecords
                 foreach ($form['list_fenotipo'] as $key => $element) {
 
                     UnidadTransfusionalFenotipo::create([
-                        'id_unidad_transfusional' => $unidad->id_unidad_transfusional,
+                        'id_unidad_transfusional' => $unidad->id,
                         'id_fenotipo' => $element['id_fenotipo'],
                         'id_tipo_rh' => $element['id_tipo_rh'],
                         'descripcion' => $element['nombre_fenotipo'] . $element['sigla_tipo_rh'],

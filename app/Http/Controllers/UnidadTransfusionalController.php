@@ -127,8 +127,8 @@ class UnidadTransfusionalController extends Controller
 
     public static function publicarEntradaUnidad($unidad, $entrada)
     {
-        $idEntradaUnidad = $entrada->id_entrada_unidad;
-        $idUnidadTransfusional = $unidad->id_unidad_transfusional;
+        $idEntradaUnidad = $entrada->id;
+        $idUnidadTransfusional = $unidad->id;
         $idBodega = $unidad->bodega_fk;
         $idTipoHemocomponente = $unidad->tipo_hemocomponente_fk;
         $idUsuario = Auth::user()->id;
@@ -148,7 +148,7 @@ class UnidadTransfusionalController extends Controller
     public static function sacarEntradaUnidad($bitacora, $entrada)
     {
 
-        $idEntradaUnidad = $entrada->id_entrada_unidad;
+        $idEntradaUnidad = $entrada->id;
         $idUnidadTransfusional = $bitacora->unidad_transfusional_fk;
         $idBodega = $bitacora->unidadtransfusional->bodega_fk;
         $idTipoHemocomponente = $bitacora->unidadtransfusional->tipo_hemocomponente_fk;

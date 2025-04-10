@@ -10,9 +10,9 @@ class Fenotipo extends Model
 
     public $table = "t_fenotipo";
     public $timestamps = true;
-    protected $primaryKey = 'id_fenotipo';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_fenotipo',
+        'id',
         'nombre_fenotipo',
         'created_at',
         'updated_at',
@@ -22,6 +22,6 @@ class Fenotipo extends Model
 
     public function unidadtransfusionalfenotipo()
     {
-        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_fenotipo', 'id_fenotipo');
+        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_fenotipo', 'id');
     }
 }

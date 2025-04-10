@@ -10,6 +10,7 @@ export default {
         './app/Filament/**/*.php',
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
+       './vendor/jaocero/activity-timeline/resources/views/**/*.blade.php',
     ],
 
     theme: {

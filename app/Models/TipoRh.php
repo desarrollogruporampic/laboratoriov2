@@ -12,9 +12,9 @@ class TipoRh extends Model
     use HasFactory;
     public $table = "t_tipo_rh";
     public $timestamps = true;
-    protected $primaryKey = 'id_tipo_rh';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_tipo_rh',
+        'id',
         'nombre_tipo_rh',
         'sigla_tipo_rh',
         'created_at',
@@ -26,6 +26,6 @@ class TipoRh extends Model
 
     public function unidadtransfusionalfenotipo()
     {
-        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_tipo_rh', 'id_tipo_rh');
+        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_tipo_rh', 'id');
     }
 }

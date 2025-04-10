@@ -13,9 +13,9 @@ class EntradaUnidad extends Model
 
     public $table = "t_entrada_unidad";
     public $timestamps = true;
-    protected $primaryKey = 'id_entrada_unidad';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_entrada_unidad',
+        'id',
         'bodega_fk',
         'tipo_unidad',
         'user_genera',
@@ -28,7 +28,7 @@ class EntradaUnidad extends Model
 
     public function entradadetalle()
     {
-        return $this->hasMany(EntradaUnidadDetalle::class, 'entrada_unidad_fk', 'id_entrada_unidad')
+        return $this->hasMany(EntradaUnidadDetalle::class, 'entrada_unidad_fk', 'id')
             ->where('IS_DELETE', 0)
             ->with(['unidadtransfusional', 'tipohemocomponente', 'bodegaalmacen']);
     }

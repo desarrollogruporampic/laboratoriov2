@@ -10,9 +10,9 @@ class KardexUnidad extends Model
 {
     public $table = "t_kardex_unidad";
     public $timestamps = true;
-    protected $primaryKey = 'id_kardex_unidad';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_kardex_unidad',
+        'id',
         'tipo_accion',
         'unidad_transfusional_fk',
         'entrada_unidad_fk',

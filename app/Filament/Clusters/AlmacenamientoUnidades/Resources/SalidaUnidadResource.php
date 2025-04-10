@@ -49,6 +49,7 @@ class SalidaUnidadResource extends Resource
 
     protected static ?string $navigationGroup = 'Salida Unidades';
 
+    protected static ?int $navigationSort = 1;
     /* protected static SubNavigationPosition $subNavigationPosition  = SubNavigationPosition::Top; */
 
 

@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Enums\TipoAccion;
 use App\Enums\TipoBitacoraUnidad;
 use Guava\FilamentDrafts\Concerns\HasDrafts;
+use Illuminate\Database\Eloquent\Casts\AsEnumCollection;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Log;
 
 class BitacoraUnidad extends Model
 {
@@ -15,11 +19,11 @@ class BitacoraUnidad extends Model
 
     public $table = "t_bitacora_unidad";
     public $timestamps = true;
-    protected $primaryKey = 'id_bitacora_unidad';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_bitacora_unidad',
+        'id',
         'unidad_transfusional_fk',
-        'tipo_unidad',
+        'tipo_bitacora',
         'accion',
         'comentario',
         'user_genera',
@@ -35,20 +39,29 @@ class BitacoraUnidad extends Model
         'publisher_id',
     ];
 
-    protected function casts(): array
-    {
-        return [
-            'tipo_unidad' => TipoBitacoraUnidad::class,
-        ];
-    }
-
     protected array $draftableRelations = [
         'unidadtransfusional',
 
     ];
 
+    protected function casts(): array
+    {
+        return [
+            'tipo_bitacora' => TipoAccion::class,
+        ];
+    }
+
+    protected function nombreBitacora(): Attribute
+    {
+        return new Attribute(
+            get: function (mixed $value) {
+                Log::info($value);
+            },
+        );
+    }
+
     public function unidadtransfusional(): BelongsTo
     {
-        return $this->belongsTo(UnidadTransfusional::class, 'unidad_transfusional_fk', 'id_unidad_transfusional')->with('tipohemocomponente', 'tiporh');
+        return $this->belongsTo(UnidadTransfusional::class, 'unidad_transfusional_fk', 'id')->with('tipohemocomponente', 'tiporh');
     }
 }

@@ -14,9 +14,9 @@ class UnidadTransfusional extends Model
 
     public $table = "t_unidad_transfusional";
     public $timestamps = true;
-    protected $primaryKey = 'id_unidad_transfusional';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_unidad_transfusional',
+        'id',
         'tipo_hemocomponente_fk',
         'numero_componente',
         'fecha_donacion',
@@ -66,22 +66,23 @@ class UnidadTransfusional extends Model
 
     public function tipohemocomponente()
     {
-        return $this->belongsTo(TipoHemocomponente::class, 'tipo_hemocomponente_fk', 'id_tipo_hemocomponente');
+        return $this->belongsTo(TipoHemocomponente::class, 'tipo_hemocomponente_fk', 'id');
     }
 
     public function gruposanguineo()
     {
-        return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo_fk', 'id_grupo_sanguineo');
+        return $this->belongsTo(GrupoSanguineo::class, 'grupo_sanguineo_fk', 'id');
     }
 
     public function tiporh()
     {
-        return $this->belongsTo(TipoRh::class, 'tipo_rh_fk', 'id_tipo_rh');
+        return $this->belongsTo(TipoRh::class, 'tipo_rh_fk', 'id');
     }
     public function bodegaalmacen()
     {
         return $this->belongsTo(BodegaAlmacen::class, 'bodega_fk', 'id_bodega_almacen');
     }
+
     public function userentrada()
     {
         return $this->belongsTo(User::class, 'user_registra', 'id');
@@ -97,10 +98,19 @@ class UnidadTransfusional extends Model
         return $this->hasManyThrough(UnidadTransfusional::class, UnidadTransfusionalFenotipo::class, 'id_unidad_transfusional', 'id_unidad_transfusional');
     }
  */
+    public function kardex()
+    {
+        return $this->hasMany(KardexUnidad::class, 'unidad_transfusional_fk', 'id');
+    }
+
+    public function bitacora()
+    {
+        return $this->hasMany(BitacoraUnidad::class, 'unidad_transfusional_fk', 'id');
+    }
 
     public function unidadtransfusionalfenotipo(): HasMany
     {
-        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_unidad_transfusional', 'id_unidad_transfusional')->with('fenotipo', 'tiporh');
+        return $this->hasMany(UnidadTransfusionalFenotipo::class, 'id_unidad_transfusional', 'id')->with('fenotipo', 'tiporh');
     }
 
 
@@ -114,7 +124,7 @@ class UnidadTransfusional extends Model
             Log::debug($unidad);
 
             BitacoraUnidad::create([
-                'unidad_transfusional_fk' => $unidad['id_unidad_transfusional'],
+                'unidad_transfusional_fk' => $unidad['id'],
                 'accion' => 25,
                 'comentario' => 'Entrada de la unidad ' . $unidad['numero_componente'],
                 'user_genera' =>  $unidad['user_registra'],

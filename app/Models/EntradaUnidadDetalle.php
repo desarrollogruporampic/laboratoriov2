@@ -8,9 +8,9 @@ class EntradaUnidadDetalle extends Model
 {
     public $table = "t_entrada_unidad_detalle";
     public $timestamps = true;
-    protected $primaryKey = 'id_entrada_unidad_detalle';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_entrada_unidad_detalle',
+        'id',
         'entrada_unidad_fk',
         'unidad_transfusional_fk',
         'bodega_fk',
@@ -25,16 +25,16 @@ class EntradaUnidadDetalle extends Model
 
     public function entradaunidad()
     {
-        return $this->belongsTo(EntradaUnidad::class, 'entrada_unidad_fk', 'id_entrada_unidad');
+        return $this->belongsTo(EntradaUnidad::class, 'entrada_unidad_fk', 'id');
     }
 
     public function unidadtransfusional()
     {
-        return $this->belongsTo(UnidadTransfusional::class, 'unidad_transfusional_fk', 'id_unidad_transfusional')->with('gruposanguineo', 'tiporh');
+        return $this->belongsTo(UnidadTransfusional::class, 'unidad_transfusional_fk', 'id')->with('gruposanguineo', 'tiporh');
     }
     public function tipohemocomponente()
     {
-        return $this->belongsTo(TipoHemocomponente::class, 'tipo_hemocomponente_fk', 'id_tipo_hemocomponente');
+        return $this->belongsTo(TipoHemocomponente::class, 'tipo_hemocomponente_fk', 'id');
     }
 
     public function bodegaalmacen()

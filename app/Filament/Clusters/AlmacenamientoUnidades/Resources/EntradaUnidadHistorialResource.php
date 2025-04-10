@@ -5,11 +5,14 @@ namespace App\Filament\Clusters\AlmacenamientoUnidades\Resources;
 use App\Enums\TipoBitacoraUnidad;
 use App\Filament\Clusters\AlmacenamientoUnidades;
 use App\Filament\Clusters\AlmacenamientoUnidades\Resources\EntradaUnidadHistorialResource\Pages;
+use App\Filament\Exports\EntradaUnidadExporter;
 use App\Models\EntradaUnidad;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\Filter;
@@ -29,7 +32,7 @@ class EntradaUnidadHistorialResource extends Resource
 
     /*     protected static SubNavigationPosition $subNavigationPosition  = SubNavigationPosition::Top; */
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $pluralLabel = 'Historial Unidad Transfusional';
 
@@ -50,6 +53,10 @@ class EntradaUnidadHistorialResource extends Resource
     {
         return $table
             /*   ->query(BitacoraUnidad::query()->where('IS_DELETE', 0)->where('EMPRESA', 1)->onlyDrafts()) */
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(EntradaUnidadExporter::class)
+            ])
             ->columns([
                 TextColumn::make('tipo_unidad')
                     ->badge()
@@ -63,7 +70,7 @@ class EntradaUnidadHistorialResource extends Resource
                     ->sortable(true)
                     ->toggleable(isToggledHiddenByDefault: false)
                     ->width('10%'),
-                TextColumn::make('id_entrada_unidad')
+                TextColumn::make('id')
                     ->label('Número entrada')
                     ->sortable(true)
                     ->toggleable(isToggledHiddenByDefault: false),
@@ -103,11 +110,10 @@ class EntradaUnidadHistorialResource extends Resource
                         shouldOpenInNewTab: true
                     )
             ])
-            /*  ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]) */;
+            ->bulkActions([
+                ExportBulkAction::make()
+                    ->exporter(EntradaUnidadExporter::class)
+            ]);
     }
 
     public static function getRelations(): array

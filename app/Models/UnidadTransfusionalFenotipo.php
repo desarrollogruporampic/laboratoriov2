@@ -13,9 +13,9 @@ class UnidadTransfusionalFenotipo extends Pivot
 
     public $table = "t_transfusional_fenotipo";
     public $timestamps = true;
-    protected $primaryKey = 'id_transfusional_fenotipo';
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'id_transfusional_fenotipo',
+        'id',
         'id_unidad_transfusional',
         'id_fenotipo',
         'id_tipo_rh',
@@ -40,16 +40,16 @@ class UnidadTransfusionalFenotipo extends Pivot
 
     public function fenotipo()
     {
-        return $this->belongsTo(Fenotipo::class, 'id_fenotipo', 'id_fenotipo');
+        return $this->belongsTo(Fenotipo::class, 'id', 'id_fenotipo');
     }
     public function tiporh()
     {
-        return $this->belongsTo(TipoRh::class, 'id_tipo_rh', 'id_tipo_rh');
+        return $this->belongsTo(TipoRh::class, 'id_tipo_rh', 'id');
     }
 
     public function unidadtransfusional()
     {
-        return $this->belongsTo(UnidadTransfusional::class, 'id_unidad_transfusional', 'id_unidad_transfusional')->with('fenotipo', 'tiporh')->where('IS_DELETE', 0);
+        return $this->belongsTo(UnidadTransfusional::class, 'id_unidad_transfusional', 'id')->with('fenotipo', 'tiporh')->where('IS_DELETE', 0);
     }
 
 

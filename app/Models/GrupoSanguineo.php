@@ -9,9 +9,9 @@
     {
         public $table = "t_grupo_sanguineo";
         public $timestamps = true;
-        protected $primaryKey = 'id_grupo_sanguineo';
+        protected $primaryKey = 'id';
         protected $fillable = [
-            'id_grupo_sanguineo',
+            'id',
             'nombre_grupo_sanguineo',
             'created_at',
             'updated_at',

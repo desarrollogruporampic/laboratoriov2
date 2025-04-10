@@ -66,7 +66,7 @@ class CreateSalidaUnidadWidget extends Widget implements HasForms
                         Select::make('tipo_hemocomponente_fk')
                             ->label('Tipo de Hemocomponente')
                             ->prefixIcon('healthicons-f-blood-rh-p')
-                            ->options(fn() => TipoHemocomponente::all()->pluck('nombre_tipo_hemocomponente', 'id_tipo_hemocomponente'))
+                            ->options(fn() => TipoHemocomponente::all()->pluck('nombre_tipo_hemocomponente', 'id'))
                             ->searchable(true)
                             ->searchDebounce(debounce: 200)
                             ->required()
@@ -156,7 +156,7 @@ class CreateSalidaUnidadWidget extends Widget implements HasForms
             $unidad = UnidadTransfusional::where('tipo_hemocomponente_fk', $form['tipo_hemocomponente_fk'])->where('numero_componente', $form['numero_componente'])->first();
 
             BitacoraUnidad::createDraft([
-                'unidad_transfusional_fk' =>  $unidad->id_unidad_transfusional,
+                'unidad_transfusional_fk' =>  $unidad->id,
                 'comentario' => $form['comentario'],
                 'user_genera' => Auth::id(),
                 'EMPRESA' => 1,

@@ -4,6 +4,7 @@ namespace App\Filament\Clusters\AlmacenamientoUnidades\Resources\TrazabilidadUni
 
 use App\Filament\Clusters\AlmacenamientoUnidades\Resources\TrazabilidadUnidadResource;
 use App\Filament\Clusters\AlmacenamientoUnidades\Resources\TrazabilidadUnidadResource\Widgets\SearchUnidadWidget;
+use App\Filament\Clusters\AlmacenamientoUnidades\Resources\TrazabilidadUnidadResource\Widgets\TimeLineUnidadWidget;
 use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
@@ -16,6 +17,7 @@ class ManageTrazabilidadUnidads extends ManageRecords
     {
         return [
             SearchUnidadWidget::class,
+
         ];
     }
 
@@ -23,6 +25,7 @@ class ManageTrazabilidadUnidads extends ManageRecords
     {
         return [
             SearchUnidadWidget::class,
+
         ];
     }
 
